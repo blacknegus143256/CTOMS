@@ -9,6 +9,8 @@ namespace App\Filament\Resources\TailoringShops;
     use Filament\Tables;
     use Filament\Tables\Table;
     use BackedEnum;
+    use Filament\Support\Icons\Heroicon;
+
     use Filament\Schemas\Schema;
     use Filament\Forms\Components\Select;
     use Filament\Forms\Components\Textarea;
@@ -24,7 +26,7 @@ namespace App\Filament\Resources\TailoringShops;
 
         // I removed the explicit type hint here to stop the "BackedEnum" error.
         // It will inherit the correct type from the parent class automatically.
-        protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+        protected static string | BackedEnum | null $navigationIcon = Heroicon::BuildingOffice;
 
         protected static ?string $navigationLabel = 'Tailoring Shops';
 
