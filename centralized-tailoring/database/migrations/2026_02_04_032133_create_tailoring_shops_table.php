@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('tailoring_shops', function (Blueprint $table) {
             $table->id();
             $table->string('shop_name'); 
-            $table->string('contact_person'); 
+            $table->string('contact_person')->nullable(); 
             $table->string('contact_role')->default('Owner'); 
-            $table->text('address');
+            $table->text('address')->default('Dumaguete City');
             $table->string('contact_number')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
