@@ -9,11 +9,26 @@ use Filament\Schemas\Schema;    // The tool to build the form structure
 use Filament\Pages\Tenancy\RegisterTenant; // The specialized "Template" we are using
 use Illuminate\Database\Eloquent\Model; // Generic tool to understand "Database Entries"
 use Illuminate\Support\Facades\Auth;
+use Filament\Facades\Filament;
 // --- 2. THE CLASS ---
 // We extend "RegisterTenant", NOT "Page".
 // This gives us special superpowers to handle shop creation.
 class RegisterShop extends RegisterTenant
 {
+    public function mount(): void
+    {
+        $user = Auth::user();
+
+        // CHECK: Does this user already own a shop?
+        if ($user->tailoringShops()->exists()) {
+            
+            // OPTIONAL: Send a notification
+            // Notification::make()->title('You already have a shop!')->warning()->send();
+            
+            // REDIRECT: Send them straight to their dashboard
+            $this->redirect('/admin', navigate: true); 
+        }
+    }
     protected static ?string $slug = 'create-shop';
     // --- 3. THE FORM LABEL ---
     public static function getLabel(): string

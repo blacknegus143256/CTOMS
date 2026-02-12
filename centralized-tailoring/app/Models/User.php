@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants; 
 use Filament\Panel;
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasTenants
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -58,11 +58,11 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->tailoringShops;
     }
-    // public function canAccessTenant(Model $tenant): bool
-    // {
-    //     // Simple check: Is this user in the 'shop_user' list for this shop?
-    //     return $this->tailoringShops->contains($tenant);
-    // }
+    public function canAccessTenant(Model $tenant): bool
+    {
+        // Simple check: Is this user in the 'shop_user' list for this shop?
+        return $this->tailoringShops->contains($tenant);
+    }
     public function canAccessPanel(Panel $panel): bool
     {
         return true; 
