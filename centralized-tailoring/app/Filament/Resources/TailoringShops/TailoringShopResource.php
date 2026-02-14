@@ -3,8 +3,6 @@ namespace App\Filament\Resources\TailoringShops;
     
     use App\Filament\Resources\TailoringShops\Pages;
     use App\Models\TailoringShop;
-    use Filament\Forms;
-    use Filament\Forms\Form; // <--- THIS LINE FIXES THE "UNDEFINED TYPE" ERROR
     use Filament\Resources\Resource;
     use Filament\Tables;
     use Filament\Tables\Table;
@@ -18,8 +16,8 @@ namespace App\Filament\Resources\TailoringShops;
 
     use Filament\Actions\Action;
     use Filament\Actions\BulkAction;
-
-
+    
+    use App\Filament\Resources\TailoringShops\RelationManagers\AttributesRelationManager; // Make sure to import the RelationManagers namespace
     class TailoringShopResource extends Resource
     {
         protected static ?string $model = TailoringShop::class;
@@ -103,9 +101,10 @@ namespace App\Filament\Resources\TailoringShops;
         {
             return [
                 //
+            AttributesRelationManager::class,
             ];
         }
-
+        
         public static function getPages(): array
         {
             return [
