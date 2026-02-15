@@ -27,14 +27,6 @@ class AttributesRelationManager extends RelationManager
         return $schema
             ->components([
                 // 1. SELECT ITEM
-                Select::make('attribute_id')
-                    ->relationship('attribute', 'name')
-                    ->label('Item Name')
-                    ->searchable()
-                    ->preload()
-                    ->required()
-                    ->columnSpanFull(),
-
                 // 2. PRICE
                 TextInput::make('price')
                     ->numeric()
@@ -45,7 +37,7 @@ class AttributesRelationManager extends RelationManager
                 // 3. UNIT
                 Select::make('unit')
                     ->options([
-                        'per yard' => 'Per Yard',
+                        'per Inches' => 'Per Inches',
                         'per piece' => 'Per Piece',
                         'starting at' => 'Starting Price',
                         'per set' => 'Per Set',
@@ -94,12 +86,26 @@ class AttributesRelationManager extends RelationManager
                 // The Attach Button
                 AttachAction::make()
                     ->preloadRecordSelect()
+                    ->recordSelect(function (Select $select) {
+        return $select
+            ->createOptionForm([
+                TextInput::make('name')
+                    ->label('Attribute Name')
+                    ->required()
+                    ->maxLength(255),
+            ])
+            ->createOptionAction(fn ($action) =>
+                $action
+                    ->modalHeading('Add New Attribute')
+                    ->modalSubmitActionLabel('Create')
+            );
+    })
                     ->form(fn (AttachAction $action): array => [
                         $action->getRecordSelect(),
                         TextInput::make('price')->numeric()->prefix('₱')->required(),
                         Select::make('unit')
                             ->options([
-                                'per yard' => 'Per Yard',
+                                'per inches' => 'Per Inches',
                                 'per piece' => 'Per Piece',
                                 'starting at' => 'Starting Price',
                             ])->required()->default('per item'),

@@ -12,6 +12,7 @@ class Attribute extends Model
     use HasFactory;
     protected $guarded = [];
     
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(AttributeCategory::class, 'attribute_category_id');
